@@ -1,0 +1,492 @@
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/styles/global.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+/* src/styles/global.css */
+@import url('https://fonts.googleapis.com/css2?family=Fustat:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* Brand Colors */
+  --mandae-primary: #a28ef9;
+  --mandae-primary-light: #bbaaee;
+  --mandae-primary-dark: #8162e0;
+  --mandae-accent: #a4f5a6;
+  --mandae-accent-light: #c2f8c4;
+
+  /* Status Colors */
+  --mandae-success: #a4f5a6;
+  --mandae-success-light: #e4fce5;
+  --mandae-warning: #ffd166;
+  --mandae-danger: #ef476f;
+  --mandae-danger-light: #fadadd;
+
+  /* Neutrals & Surfaces */
+  --mandae-bg: #e6eae4;
+  /* Appears to be the background color of the image */
+  --mandae-bg-element: #ffffff;
+  --mandae-text: #222222;
+  --mandae-text-light: #8d99ae;
+  /* Keep for secondary text */
+  --mandae-border: #edf2f4;
+
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+
+  /* Layout & Spacing */
+  --sidebar-width: 260px;
+  --header-height: 72px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  /* Typography */
+  --font-heading: 'Fustat', sans-serif;
+  --font-body: 'Fustat', sans-serif;
+  /* Both seem to use it in the design. We can keep Inter if it gets too rigid, but let's try Fustat */
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-inter {
+  --mandae-primary: #DC6016;
+  --mandae-primary-light: #f48e50;
+  --mandae-primary-dark: #b54c10;
+  --mandae-accent: #59595C;
+  --mandae-accent-light: #7a7a7e;
+
+  --mandae-bg: #FBEFE7;
+  --mandae-bg-element: #FFFFFF;
+  --mandae-text: #222222;
+  --mandae-text-light: #59595C;
+  --mandae-border: #e8d8ce;
+
+  --font-heading: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* Base Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--mandae-bg);
+  color: var(--mandae-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--mandae-text);
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+/* Global Utility Layout */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1 1;
+  height: 100vh;
+  overflow-y: auto;
+  position: relative;
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar for a premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--mandae-border);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mandae-text-light);
+}
+
+/* Global utility classes */
+.text-gradient {
+  background: linear-gradient(135deg, var(--mandae-primary), var(--mandae-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/*!***********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/styles/animations.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************/
+/* src/styles/animations.css */
+
+/* Micro-animations and page transitions */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulseGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Animation utility classes */
+.animate-fade-in {
+    animation: fadeIn 0.4s var(--transition-normal) forwards;
+}
+
+.animate-scale-in {
+    animation: scaleIn 0.5s var(--transition-normal) forwards;
+}
+
+.animate-slide-right {
+    animation: slideInRight 0.4s var(--transition-normal) forwards;
+}
+
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* Delay modifiers */
+.delay-100 {
+    animation-delay: 0.1s;
+    opacity: 0;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+    opacity: 0;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+    opacity: 0;
+}
+
+.delay-400 {
+    animation-delay: 0.4s;
+    opacity: 0;
+}
+
+/* Interactive Hover States */
+.hover-lift {
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.15);
+}
+/*!***********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[10].use[3]!./src/styles/components.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************/
+/* src/styles/components.css */
+
+/* Cards - Premium Glassmorphism */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: var(--radius-lg);
+}
+
+.card {
+    background: var(--mandae-bg-element);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--mandae-border);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    overflow: hidden;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-xl);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-primary {
+    background: var(--mandae-primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(162, 142, 249, 0.3);
+    /* Based on #a28ef9 */
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--mandae-primary-dark);
+    box-shadow: 0 6px 16px rgba(162, 142, 249, 0.4);
+}
+
+.btn-accent {
+    background: var(--mandae-accent);
+    color: var(--mandae-text);
+    /* Pastel green needs dark text */
+    box-shadow: 0 4px 12px rgba(164, 245, 166, 0.3);
+    /* Based on #a4f5a6 */
+}
+
+.btn-accent:hover:not(:disabled) {
+    background: var(--mandae-accent-light);
+    box-shadow: 0 6px 16px rgba(164, 245, 166, 0.4);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--mandae-primary);
+    border: 2px solid var(--mandae-primary);
+}
+
+.btn-outline:hover:not(:disabled) {
+    background: rgba(162, 142, 249, 0.05);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--mandae-text-light);
+}
+
+.btn-ghost:hover:not(:disabled) {
+    background: var(--mandae-border);
+    color: var(--mandae-text);
+}
+
+.btn-icon {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Inputs & Forms */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--mandae-text);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--mandae-border);
+    background-color: var(--mandae-bg-element);
+    color: var(--mandae-text);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--mandae-primary);
+    box-shadow: 0 0 0 3px rgba(162, 142, 249, 0.15);
+}
+
+.form-control::placeholder {
+    color: var(--mandae-text-light);
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-info {
+    background: rgba(162, 142, 249, 0.1);
+    color: var(--mandae-primary);
+}
+
+.badge-success {
+    background: rgba(164, 245, 166, 0.2);
+    color: #1a7a1b;
+    /* Darker green for contrast */
+}
+
+.badge-warning {
+    background: rgba(255, 209, 102, 0.2);
+    color: #d97706;
+}
+
+.badge-danger {
+    background: rgba(239, 71, 111, 0.1);
+    color: var(--mandae-danger);
+}
+
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    height: 12px;
+    background-color: var(--mandae-border);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--mandae-primary), var(--mandae-primary-light));
+    border-radius: 6px;
+    transition: width 0.5s var(--transition-normal);
+}
+
+/* Avatars */
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-lg {
+    width: 80px;
+    height: 80px;
+}
+
+.avatar-xl {
+    width: 120px;
+    height: 120px;
+}

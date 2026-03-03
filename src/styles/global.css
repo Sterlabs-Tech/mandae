@@ -1,0 +1,158 @@
+/* src/styles/global.css */
+@import url('https://fonts.googleapis.com/css2?family=Fustat:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* Brand Colors */
+  --mandae-primary: #a28ef9;
+  --mandae-primary-light: #bbaaee;
+  --mandae-primary-dark: #8162e0;
+  --mandae-accent: #a4f5a6;
+  --mandae-accent-light: #c2f8c4;
+
+  /* Status Colors */
+  --mandae-success: #a4f5a6;
+  --mandae-success-light: #e4fce5;
+  --mandae-warning: #ffd166;
+  --mandae-danger: #ef476f;
+  --mandae-danger-light: #fadadd;
+
+  /* Neutrals & Surfaces */
+  --mandae-bg: #e6eae4;
+  /* Appears to be the background color of the image */
+  --mandae-bg-element: #ffffff;
+  --mandae-text: #222222;
+  --mandae-text-light: #8d99ae;
+  /* Keep for secondary text */
+  --mandae-border: #edf2f4;
+
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+
+  /* Layout & Spacing */
+  --sidebar-width: 260px;
+  --header-height: 72px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  /* Typography */
+  --font-heading: 'Fustat', sans-serif;
+  --font-body: 'Fustat', sans-serif;
+  /* Both seem to use it in the design. We can keep Inter if it gets too rigid, but let's try Fustat */
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-inter {
+  --mandae-primary: #DC6016;
+  --mandae-primary-light: #f48e50;
+  --mandae-primary-dark: #b54c10;
+  --mandae-accent: #59595C;
+  --mandae-accent-light: #7a7a7e;
+
+  --mandae-bg: #FBEFE7;
+  --mandae-bg-element: #FFFFFF;
+  --mandae-text: #222222;
+  --mandae-text-light: #59595C;
+  --mandae-border: #e8d8ce;
+
+  --font-heading: 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* Base Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--mandae-bg);
+  color: var(--mandae-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--mandae-text);
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-fast);
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input,
+select,
+textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+/* Global Utility Layout */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  position: relative;
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar for a premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--mandae-border);
+  border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mandae-text-light);
+}
+
+/* Global utility classes */
+.text-gradient {
+  background: linear-gradient(135deg, var(--mandae-primary), var(--mandae-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

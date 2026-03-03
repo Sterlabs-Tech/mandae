@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  parentId  String?  // References another User
+  name      String
+  email     String   @unique
+  phone     String?
+  password  String
+  avatar    String?
+  role      String   // 'responsavel' ou 'crianca'
+  status    Boolean  @default(true)
+  
+  parent    User?    @relation("ParentChild", fields: [parentId], references: [id])
+  children  User[]   @relation("ParentChild")
+  
+  ownedMissions Mission[] @relation("MissionOwner")
+  childMissions Mission[] @relation("MissionChild")
+  
+  penalties Penalty[] @relation("PenaltyOwner")
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Mission {
+  id               String    @id @default(uuid())
+  title            String
+  coverImage       String?
+  type             String    // 'FIXO' ou 'VARIAVEL'
+  subtype          String?   // 'PRESENTE', 'DINHEIRO', etc
+  prizeDescription String?
+  status           String    @default("A_INICIAR") // A_INICIAR, EM_ANDAMENTO, CONCLUIDA, FINALIZADA, CANCELADA
+  
+  ownerId          String
+  childId          String
+  
+  owner            User      @relation("MissionOwner", fields: [ownerId], references: [id])
+  child            User      @relation("MissionChild", fields: [childId], references: [id])
+  
+  startDate        DateTime
+  endDate          DateTime
+  startedAt        DateTime?
+  completedAt      DateTime?
+  finishedAt       DateTime?
+  
+  activities       Activity[]
+  penalties        Penalty[]
+
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model Activity {
+  id          String    @id @default(uuid())
+  missionId   String
+  mission     Mission   @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  
+  description String
+  plannedDate DateTime
+  weight      Float?    // Para missões FIXAS, ex: 10 (%)
+  value       Float?    // Para missões VARIÁVEIS, ex: 15.50 (R$)
+  status      String    @default("pendente") // pendente, reivindicada, realizada
+  
+  completedAt DateTime?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Penalty {
+  id            String    @id @default(uuid())
+  missionId     String
+  mission       Mission   @relation(fields: [missionId], references: [id], onDelete: Cascade)
+  
+  description   String
+  impactPercent Float?    // Para missões FIXAS
+  impactValue   Float?    // Para missões VARIÁVEIS
+  
+  ownerId       String
+  owner         User      @relation("PenaltyOwner", fields: [ownerId], references: [id])
+  
+  createdAt     DateTime  @default(now())
+}

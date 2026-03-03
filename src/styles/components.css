@@ -1,0 +1,210 @@
+/* src/styles/components.css */
+
+/* Cards - Premium Glassmorphism */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: var(--radius-lg);
+}
+
+.card {
+    background: var(--mandae-bg-element);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--mandae-border);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    overflow: hidden;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-xl);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-primary {
+    background: var(--mandae-primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(162, 142, 249, 0.3);
+    /* Based on #a28ef9 */
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--mandae-primary-dark);
+    box-shadow: 0 6px 16px rgba(162, 142, 249, 0.4);
+}
+
+.btn-accent {
+    background: var(--mandae-accent);
+    color: var(--mandae-text);
+    /* Pastel green needs dark text */
+    box-shadow: 0 4px 12px rgba(164, 245, 166, 0.3);
+    /* Based on #a4f5a6 */
+}
+
+.btn-accent:hover:not(:disabled) {
+    background: var(--mandae-accent-light);
+    box-shadow: 0 6px 16px rgba(164, 245, 166, 0.4);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--mandae-primary);
+    border: 2px solid var(--mandae-primary);
+}
+
+.btn-outline:hover:not(:disabled) {
+    background: rgba(162, 142, 249, 0.05);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--mandae-text-light);
+}
+
+.btn-ghost:hover:not(:disabled) {
+    background: var(--mandae-border);
+    color: var(--mandae-text);
+}
+
+.btn-icon {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Inputs & Forms */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--mandae-text);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--mandae-border);
+    background-color: var(--mandae-bg-element);
+    color: var(--mandae-text);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--mandae-primary);
+    box-shadow: 0 0 0 3px rgba(162, 142, 249, 0.15);
+}
+
+.form-control::placeholder {
+    color: var(--mandae-text-light);
+}
+
+/* Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-info {
+    background: rgba(162, 142, 249, 0.1);
+    color: var(--mandae-primary);
+}
+
+.badge-success {
+    background: rgba(164, 245, 166, 0.2);
+    color: #1a7a1b;
+    /* Darker green for contrast */
+}
+
+.badge-warning {
+    background: rgba(255, 209, 102, 0.2);
+    color: #d97706;
+}
+
+.badge-danger {
+    background: rgba(239, 71, 111, 0.1);
+    color: var(--mandae-danger);
+}
+
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    height: 12px;
+    background-color: var(--mandae-border);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--mandae-primary), var(--mandae-primary-light));
+    border-radius: 6px;
+    transition: width 0.5s var(--transition-normal);
+}
+
+/* Avatars */
+.avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-lg {
+    width: 80px;
+    height: 80px;
+}
+
+.avatar-xl {
+    width: 120px;
+    height: 120px;
+}
