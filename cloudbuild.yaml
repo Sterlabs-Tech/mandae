@@ -1,0 +1,26 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/mandae-staging', '.']
+  
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/mandae-staging']
+  
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'mandae-staging'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/mandae-staging'
+      - '--region'
+      - 'us-central1'
+      - '--allow-unauthenticated'
+      - '--set-env-vars'
+      - 'DATABASE_URL=postgresql://postgres:nXsP2bT%5BMG%2FO.D%2B9@35.232.239.171:5432/mandae_staging'
+
+images:
+  - 'gcr.io/$PROJECT_ID/mandae-staging'

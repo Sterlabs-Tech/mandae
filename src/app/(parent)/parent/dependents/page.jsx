@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useAppStore } from '../../../../store/AppContext';
 import { UserPlus, Settings, Trash2 } from 'lucide-react';
 import ChildProfileSettings from '../../../../components/shared/ChildProfileSettings';
+import { createDependent, deleteDependent, fetchFamilyData } from '../../../../actions/db';
 
 export default function Dependents() {
     const { users, currentUser, setUsers } = useAppStore();
@@ -16,7 +17,7 @@ export default function Dependents() {
 
     const children = users.filter(u => u.role === 'crianca' && u.parentId === currentUser?.id);
 
-    const handleAddChild = (e) => {
+    const handleAddChild = async (e) => {
         e.preventDefault();
         const newChild = {
             id: `child_${Date.now()}`,
@@ -28,14 +29,31 @@ export default function Dependents() {
             status: true,
             avatar: `https://ui-avatars.com/api/?name=${name.replace(' ', '+')}&background=06d6a0&color=fff`
         };
-        setUsers([...users, newChild]);
-        setShowAddForm(false);
-        setName(''); setEmail(''); setPassword('');
+
+        const result = await createDependent(newChild);
+        if (result.success) {
+            const data = await fetchFamilyData(currentUser.id);
+            if (data.success) {
+                setUsers(data.users);
+            }
+            setShowAddForm(false);
+            setName(''); setEmail(''); setPassword('');
+        } else {
+            alert(result.message || 'Erro ao adicionar dependente.');
+        }
     };
 
-    const removeChild = (childId) => {
+    const removeChild = async (childId) => {
         if (confirm('Tem certeza que deseja remover esta criança e todo o seu histórico?')) {
-            setUsers(users.filter(u => u.id !== childId));
+            const result = await deleteDependent(childId);
+            if (result.success) {
+                const data = await fetchFamilyData(currentUser.id);
+                if (data.success) {
+                    setUsers(data.users);
+                }
+            } else {
+                alert(result.message || 'Erro ao remover dependente.');
+            }
         }
     };
 

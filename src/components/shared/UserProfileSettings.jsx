@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useAppStore } from '../../store/AppContext';
 import { X, Upload, Save, Palette } from 'lucide-react';
+import { updateDependent } from '../../actions/db';
 
 const UserProfileSettings = ({ onClose }) => {
-    const { currentUser, updateUser, theme, setTheme } = useAppStore();
+    const { currentUser, login, theme, setTheme } = useAppStore();
 
     const [name, setName] = useState(currentUser?.name || '');
     const [password, setPassword] = useState(currentUser?.password || '');
@@ -21,20 +22,25 @@ const UserProfileSettings = ({ onClose }) => {
         }
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (!name.trim() || !password.trim()) {
             alert('Nome e senha são obrigatórios.');
             return;
         }
 
-        updateUser(currentUser.id, {
+        const res = await updateDependent(currentUser.id, {
             name,
             password,
             avatar
         });
 
-        setTheme(localTheme);
+        if (res.success) {
+            login(res.user);
+        } else {
+            alert(res.message || 'Erro ao atualizar usuário');
+        }
 
+        setTheme(localTheme);
         onClose();
     };
 

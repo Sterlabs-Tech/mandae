@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAppStore } from '../../store/AppContext';
 import { X, ChevronRight, ChevronLeft, Save, Upload } from 'lucide-react';
+import { saveMission, fetchFamilyData } from '../../actions/db';
 
 const DEFAULT_COVER = 'https://images.unsplash.com/photo-1595514535415-84cf0efd3244?w=400&q=80';
 
@@ -76,7 +77,7 @@ const MissionWizard = ({ onClose }) => {
         (type === 'FIXO' ? totalWeight === 100 : true) &&
         missionActivities.every(a => a.description.trim() !== '' && a.plannedDate);
 
-    const handleFinish = () => {
+    const handleFinish = async () => {
         const newMissionId = `mission_${Date.now()}`;
         const newMission = {
             id: newMissionId,
@@ -105,8 +106,13 @@ const MissionWizard = ({ onClose }) => {
             completedAt: null
         }));
 
-        setMissions([...missions, newMission]);
-        setActivities(prev => [...prev, ...finalActivities]);
+        await saveMission(newMission, finalActivities);
+        const data = await fetchFamilyData(currentUser.id);
+        if (data.success) {
+            setMissions(data.missions);
+            setActivities(data.activities);
+        }
+
         onClose();
     };
 

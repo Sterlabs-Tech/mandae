@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAppStore } from '../../store/AppContext';
 import { UserPlus, Camera } from 'lucide-react';
+import { registerUser } from '../../actions/db';
 
 export default function Register() {
     const [name, setName] = useState('');
@@ -11,25 +12,29 @@ export default function Register() {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
 
-    const { users, setUsers } = useAppStore();
+    // No longer need users array here, calling db action directly
+    // const { users, setUsers } = useAppStore();
     const router = useRouter();
 
-    const handleRegister = (e) => {
-        e.preventDefault();
-        const newUser = {
-            id: `parent_${Date.now()}`,
-            name,
-            email,
-            phone,
-            password,
-            role: 'responsavel',
-            status: true,
-            avatar: `https://ui-avatars.com/api/?name=${name.replace(' ', '+')}&background=4361ee&color=fff`
-        };
+    const [error, setError] = useState('');
 
-        setUsers([...users, newUser]);
-        // Redirect to login after successful register
-        router.push('/login');
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        setError('');
+
+        try {
+            // Let the server handle ID creation (uuid) and avatar defaults
+            const data = { name, email, phone, password };
+            const result = await registerUser(data);
+
+            if (result.success) {
+                router.push('/login');
+            } else {
+                setError(result.message || 'Erro ao realizar cadastro.');
+            }
+        } catch (err) {
+            setError('Houve um erro no servidor.');
+        }
     };
 
     return (
@@ -40,6 +45,12 @@ export default function Register() {
                     <h2 style={{ color: 'var(--mandae-primary-dark)', marginBottom: '0.5rem' }}>Seja um Diretor</h2>
                     <p style={{ color: 'var(--mandae-text-light)' }}>Gerencie as missões dos seus filhos.</p>
                 </div>
+
+                {error && (
+                    <div className="badge badge-danger" style={{ display: 'block', textAlign: 'center', marginBottom: '1rem', padding: '0.75rem' }}>
+                        {error}
+                    </div>
+                )}
 
                 <form onSubmit={handleRegister}>
                     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.5rem' }}>

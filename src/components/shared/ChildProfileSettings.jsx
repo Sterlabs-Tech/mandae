@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useAppStore } from '../../store/AppContext';
 import { X, Upload, Save } from 'lucide-react';
+import { updateDependent, fetchFamilyData } from '../../actions/db';
 
 const ChildProfileSettings = ({ child, onClose }) => {
-    const { updateUser } = useAppStore();
+    const { currentUser, setUsers } = useAppStore();
 
     const [name, setName] = useState(child?.name || '');
     const [email, setEmail] = useState(child?.email || '');
@@ -21,18 +22,27 @@ const ChildProfileSettings = ({ child, onClose }) => {
         }
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (!name.trim() || !email.trim() || !password.trim()) {
             alert('Nome, e-mail e senha são obrigatórios.');
             return;
         }
 
-        updateUser(child.id, {
+        const res = await updateDependent(child.id, {
             name,
             email,
             password,
             avatar
         });
+
+        if (res.success) {
+            const data = await fetchFamilyData(currentUser.id);
+            if (data.success) {
+                setUsers(data.users);
+            }
+        } else {
+            alert(res.message || 'Erro ao atualizar dependente');
+        }
 
         onClose();
     };

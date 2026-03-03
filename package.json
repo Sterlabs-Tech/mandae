@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
+    "dev:staging": "dotenv -e .env.staging -- next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -13,7 +14,7 @@
     "seed": "node prisma/seed.js"
   },
   "dependencies": {
-    "@prisma/client": "^7.4.2",
+    "@prisma/client": "^6.4.1",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.3.1",
     "lucide-react": "^0.575.0",
@@ -25,8 +26,9 @@
     "@eslint/js": "^9.39.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "dotenv-cli": "^11.0.0",
     "eslint": "^9.39.1",
     "globals": "^16.5.0",
-    "prisma": "^7.4.2"
+    "prisma": "^6.4.1"
   }
 }

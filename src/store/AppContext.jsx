@@ -1,7 +1,7 @@
 // src/store/AppContext.jsx
 'use client';
 import { createContext, useContext, useState, useEffect } from 'react';
-import { initialUsers, initialMissions, initialActivities, initialPenalties } from './mockData';
+import { fetchFamilyData, updateActivityStatus, updateMissionStatus, deleteDependent, saveMission } from '../actions/db';
 
 const AppContext = createContext();
 
@@ -36,11 +36,11 @@ const safeSetItem = (key, value) => {
 };
 
 export const AppProvider = ({ children }) => {
-    // Try to load from localStorage first or use initialData
-    const [users, setUsers] = useState(() => getInitialState('mandae_users', initialUsers));
-    const [missions, setMissions] = useState(() => getInitialState('mandae_missions', initialMissions));
-    const [activities, setActivities] = useState(() => getInitialState('mandae_activities', initialActivities));
-    const [penalties, setPenalties] = useState(() => getInitialState('mandae_penalties', initialPenalties));
+    // DB State
+    const [users, setUsers] = useState([]);
+    const [missions, setMissions] = useState([]);
+    const [activities, setActivities] = useState([]);
+    const [penalties, setPenalties] = useState([]);
 
     // Auth state
     const [currentUser, setCurrentUser] = useState(() => getInitialState('mandae_current_user', null));
@@ -48,11 +48,6 @@ export const AppProvider = ({ children }) => {
     // Theme state
     const [theme, setTheme] = useState(() => getThemeState());
 
-    // Sync to localStorage
-    useEffect(() => { safeSetItem('mandae_users', JSON.stringify(users)); }, [users]);
-    useEffect(() => { safeSetItem('mandae_missions', JSON.stringify(missions)); }, [missions]);
-    useEffect(() => { safeSetItem('mandae_activities', JSON.stringify(activities)); }, [activities]);
-    useEffect(() => { safeSetItem('mandae_penalties', JSON.stringify(penalties)); }, [penalties]);
     useEffect(() => { safeSetItem('mandae_theme', theme); }, [theme]);
 
     // Apply Theme to Document
@@ -63,8 +58,24 @@ export const AppProvider = ({ children }) => {
     useEffect(() => {
         if (currentUser) {
             safeSetItem('mandae_current_user', JSON.stringify(currentUser));
+            // Trigger DB fetch for everything
+            const loadData = async () => {
+                const res = await fetchFamilyData(currentUser.id);
+                if (res.success) {
+                    setUsers(res.users || []);
+                    setMissions(res.missions || []);
+                    setActivities(res.activities || []);
+                    setPenalties(res.penalties || []);
+                }
+            };
+            loadData();
         } else {
             localStorage.removeItem('mandae_current_user');
+            // Clear local cached db state immediately
+            setUsers([]);
+            setMissions([]);
+            setActivities([]);
+            setPenalties([]);
         }
     }, [currentUser]);
 
@@ -87,13 +98,10 @@ export const AppProvider = ({ children }) => {
     }, [activities]);
 
     // Actions
-    const login = (email, password) => {
-        const user = users.find(u => u.email === email && u.password === password);
-        if (user) {
-            setCurrentUser(user);
-            return { success: true, role: user.role };
-        }
-        return { success: false, message: 'Invalid credentials' };
+    // The Login and logic now runs on pages directly (Login/Register)
+    // Here we just set the current user after successful auth
+    const login = (userObj) => {
+        setCurrentUser(userObj);
     };
 
     const logout = () => {
@@ -107,27 +115,42 @@ export const AppProvider = ({ children }) => {
         }
     };
 
-    const approveActivity = (activityId) => {
-        setActivities(prev => prev.map(a =>
-            a.id === activityId ? { ...a, status: 'realizada', completedAt: new Date().toISOString() } : a
-        ));
-        // Wait: business logic: updating mission status to CONCLUIDA if it hits 100%?
-        // This will be handled by a selector or effect
+    const approveActivity = async (activityId) => {
+        const res = await updateActivityStatus(activityId, 'realizada');
+        if (res.success) {
+            // Update UI state
+            setActivities(prev => prev.map(a =>
+                a.id === activityId ? { ...a, status: 'realizada', completedAt: res.activity.completedAt } : a
+            ));
+            fetchFamilyData(currentUser.id).then(d => {
+                if (d.success) setMissions(d.missions);
+            });
+        }
+        return res;
     };
 
-    const claimActivity = (activityId) => {
-        setActivities(prev => prev.map(a =>
-            a.id === activityId ? { ...a, status: 'reivindicada' } : a
-        ));
+    const claimActivity = async (activityId) => {
+        const res = await updateActivityStatus(activityId, 'reivindicada');
+        if (res.success) {
+            setActivities(prev => prev.map(a =>
+                a.id === activityId ? { ...a, status: 'reivindicada' } : a
+            ));
+        }
+        return res;
     };
 
-    const rejectActivity = (activityId) => {
-        setActivities(prev => prev.map(a =>
-            a.id === activityId ? { ...a, status: 'pendente' } : a
-        ));
+    const rejectActivity = async (activityId) => {
+        const res = await updateActivityStatus(activityId, 'pendente');
+        if (res.success) {
+            setActivities(prev => prev.map(a =>
+                a.id === activityId ? { ...a, status: 'pendente' } : a
+            ));
+        }
+        return res;
     };
 
-    const updateMission = (missionId, props) => {
+    const updateMission = async (missionId, props) => {
+        // Here we just do UI optimistic, actual server call is elsewhere or via saveMission
         setMissions(prev => prev.map(m => m.id === missionId ? { ...m, ...props } : m));
     };
 

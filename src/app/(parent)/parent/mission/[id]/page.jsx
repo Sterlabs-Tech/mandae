@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useAppStore } from '../../../../../store/AppContext';
 import { PlusCircle, Target, ArrowLeft, Trash2, Edit3, Trash, CheckCircle2, Clock, Play, Gift } from 'lucide-react';
 import MissionEditModal from '../../../../../components/parent/MissionEditModal';
+import { deleteMission, updateMissionStatus, fetchFamilyData } from '../../../../../actions/db';
 
 export default function ParentMissionDetails({ params }) {
     // Unwrap params in Next.js 15
@@ -11,7 +12,7 @@ export default function ParentMissionDetails({ params }) {
     const id = resolvedParams.id;
 
     const router = useRouter();
-    const { missions, activities, penalties, setMissions, users, getMissionProgress, approveActivity } = useAppStore();
+    const { missions, activities, penalties, setMissions, users, currentUser, getMissionProgress, approveActivity } = useAppStore();
     const [isEditOpen, setIsEditOpen] = useState(false);
 
     const mission = missions.find(m => m.id === id);
@@ -22,15 +23,43 @@ export default function ParentMissionDetails({ params }) {
     if (!mission) return <div style={{ padding: '2rem' }}>Missão não encontrada</div>;
     const progress = getMissionProgress(mission.id);
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (confirm('Tem certeza que deseja excluir esta missão permanentemente?')) {
-            setMissions(missions.filter(m => m.id !== mission.id));
-            router.push('/parent');
+            const result = await deleteMission(mission.id);
+            if (result.success) {
+                const data = await fetchFamilyData(currentUser.id);
+                if (data.success) {
+                    setMissions(data.missions);
+                }
+                router.push('/parent');
+            } else {
+                alert(result.message || 'Erro ao excluir missão.');
+            }
         }
     };
 
-    const handleStartMission = () => {
-        setMissions(missions.map(m => m.id === mission.id ? { ...m, status: 'EM_ANDAMENTO', startedAt: new Date().toISOString() } : m));
+    const handleStartMission = async () => {
+        const result = await updateMissionStatus(mission.id, 'EM_ANDAMENTO');
+        if (result.success) {
+            const data = await fetchFamilyData(currentUser.id);
+            if (data.success) {
+                setMissions(data.missions);
+            }
+        } else {
+            alert(result.message || 'Erro ao iniciar missão.');
+        }
+    };
+
+    const handleFinalizeMission = async () => {
+        const result = await updateMissionStatus(mission.id, 'FINALIZADA');
+        if (result.success) {
+            const data = await fetchFamilyData(currentUser.id);
+            if (data.success) {
+                setMissions(data.missions);
+            }
+        } else {
+            alert(result.message || 'Erro ao finalizar missão.');
+        }
     };
 
     const completedActivities = missionActivities.filter(a => a.status === 'realizada');
@@ -60,7 +89,7 @@ export default function ParentMissionDetails({ params }) {
                             </div>
                             <div style={{ display: 'flex', gap: '0.5rem' }}>
                                 {mission.status === 'CONCLUIDA' && (
-                                    <button className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }} onClick={() => updateMission(mission.id, { status: 'FINALIZADA', finishedAt: new Date().toISOString() })}>
+                                    <button className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }} onClick={handleFinalizeMission}>
                                         <Gift size={18} /> Registrar Entrega Prêmio
                                     </button>
                                 )}

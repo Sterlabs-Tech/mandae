@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAppStore } from '../../store/AppContext';
 import { LogIn, KeyRound } from 'lucide-react';
+import { loginUser } from '../../actions/db';
 
 export default function Login() {
     const [email, setEmail] = useState('responsavel@mandae.com');
@@ -13,14 +14,20 @@ export default function Login() {
     const { login } = useAppStore();
     const router = useRouter();
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        const result = login(email, password);
-        if (result.success) {
-            if (result.role === 'responsavel') router.push('/parent');
-            else router.push('/child');
-        } else {
-            setError('E-mail ou senha inválidos.');
+        setError('');
+        try {
+            const result = await loginUser(email, password);
+            if (result.success) {
+                login(result.user); // update global state context
+                if (result.role === 'responsavel') router.push('/parent');
+                else router.push('/child');
+            } else {
+                setError(result.message || 'E-mail ou senha inválidos.');
+            }
+        } catch (err) {
+            setError('Erro ao se conectar com o servidor.');
         }
     };
 
