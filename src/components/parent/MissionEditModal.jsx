@@ -146,8 +146,8 @@ const MissionEditModal = ({ mission, onClose }) => {
                             <input type="text" className="form-control" value={title} onChange={e => setTitle(e.target.value)} />
                         </div>
 
-                        <div style={{ display: 'flex', gap: '1.5rem' }}>
-                            <div className="form-group" style={{ flex: 2 }}>
+                        <div className="flex-col-mobile" style={{ display: 'flex', gap: '1.5rem' }}>
+                            <div className="form-group" style={{ flex: 2, marginBottom: 0 }}>
                                 <label className="form-label">Capa da Missão</label>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                     <div style={{ width: '80px', height: '60px', borderRadius: 'var(--radius-sm)', overflow: 'hidden', background: 'var(--mandae-border)' }}>
@@ -164,7 +164,7 @@ const MissionEditModal = ({ mission, onClose }) => {
                                     )}
                                 </div>
                             </div>
-                            <div className="form-group" style={{ flex: 1 }}>
+                            <div className="form-group" style={{ flex: 1, marginBottom: 0 }}>
                                 <label className="form-label">Prazo Final</label>
                                 <input type="date" className="form-control" value={endDate} onChange={e => setEndDate(e.target.value)} />
                             </div>
@@ -252,12 +252,12 @@ const MissionEditModal = ({ mission, onClose }) => {
                         </div>
 
                         {showPenaltyForm && (
-                            <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end', background: 'var(--mandae-danger-light)', padding: '1rem', borderRadius: 'var(--radius-sm)', marginBottom: '1rem', border: '1px solid var(--mandae-danger)' }}>
-                                <div className="form-group" style={{ flex: 2, marginBottom: 0 }}>
+                            <div className="flex-col-mobile" style={{ display: 'flex', gap: '1rem', alignItems: 'flex-end', background: 'var(--mandae-danger-light)', padding: '1rem', borderRadius: 'var(--radius-sm)', marginBottom: '1rem', border: '1px solid var(--mandae-danger)' }}>
+                                <div className="form-group" style={{ flex: 2, marginBottom: 0, width: '100%' }}>
                                     <label className="form-label" style={{ color: 'var(--mandae-danger)' }}>Motivo da Penalidade</label>
                                     <input type="text" className="form-control" value={penaltyDesc} onChange={e => setPenaltyDesc(e.target.value)} placeholder="Ex: Faltou com respeito" />
                                 </div>
-                                <div className="form-group" style={{ flex: 1, marginBottom: 0 }}>
+                                <div className="form-group" style={{ flex: 1, marginBottom: 0, width: '100%' }}>
                                     <label className="form-label" style={{ color: 'var(--mandae-danger)' }}>Impacto ({mission.type === 'FIXO' ? '%' : 'R$'})</label>
                                     <input type="number" className="form-control" value={penaltyImpact} onChange={e => setPenaltyImpact(e.target.value)} min="1" />
                                 </div>

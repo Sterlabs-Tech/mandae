@@ -172,7 +172,7 @@ const MissionWizard = ({ onClose }) => {
 
                             <div className="form-group">
                                 <label className="form-label">Tipo de Recompensa</label>
-                                <div style={{ display: 'flex', gap: '1rem' }}>
+                                <div className="flex-col-mobile" style={{ display: 'flex', gap: '1rem' }}>
                                     <div
                                         onClick={() => setType('FIXO')}
                                         style={{ flex: 1, padding: '1rem', border: `2px solid ${type === 'FIXO' ? 'var(--mandae-primary)' : 'var(--mandae-border)'}`, borderRadius: 'var(--radius-sm)', cursor: 'pointer', textAlign: 'center', background: type === 'FIXO' ? 'rgba(67, 97, 238, 0.05)' : 'transparent' }}
@@ -203,12 +203,12 @@ const MissionWizard = ({ onClose }) => {
                         <div className="animate-fade-in">
                             <h3 style={{ marginBottom: '1.5rem' }}>Passo 2: O Cronograma</h3>
 
-                            <div style={{ display: 'flex', gap: '1.5rem' }}>
-                                <div className="form-group" style={{ flex: 1 }}>
+                            <div className="flex-col-mobile" style={{ display: 'flex', gap: '1.5rem' }}>
+                                <div className="form-group" style={{ flex: 1, marginBottom: 0 }}>
                                     <label className="form-label">Data de Início Prevista</label>
                                     <input type="date" className="form-control" value={startDate} onChange={e => setStartDate(e.target.value)} />
                                 </div>
-                                <div className="form-group" style={{ flex: 1 }}>
+                                <div className="form-group" style={{ flex: 1, marginBottom: 0 }}>
                                     <label className="form-label">Data de Término (Prazo Final)</label>
                                     <input type="date" className="form-control" value={endDate} onChange={e => setEndDate(e.target.value)} min={startDate} />
                                 </div>

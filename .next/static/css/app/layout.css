@@ -546,6 +546,12 @@ textarea {
         display: block;
     }
 
+    /* Mobile Form Stacking */
+    .flex-col-mobile {
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+
     /* Modal Fullscreen on Mobile */
     .modal-overlay {
         padding: 0 !important;
