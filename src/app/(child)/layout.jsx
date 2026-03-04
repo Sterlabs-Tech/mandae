@@ -42,10 +42,6 @@ export default function ChildLayout({ children }) {
                 </div>
 
                 <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'center' }}>
-                    <div className="badge child-header-badge" style={{ background: 'rgba(255,255,255,0.2)', color: 'white', padding: '0.5rem 1rem', display: 'flex', gap: '6px', alignItems: 'center', fontSize: '1rem', whiteSpace: 'nowrap' }}>
-                        <Trophy size={18} color="gold" />
-                        <span className="child-header-badge-text">Minhas Metas</span>
-                    </div>
                     <button className="btn-icon" onClick={handleLogout} style={{ color: 'white', background: 'rgba(255,255,255,0.1)' }} title="Sair">
                         <LogOut size={20} />
                     </button>
