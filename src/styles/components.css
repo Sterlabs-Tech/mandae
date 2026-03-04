@@ -121,9 +121,9 @@
 
 .form-control {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.85rem 1rem;
     border-radius: var(--radius-sm);
-    border: 1px solid var(--mandae-border);
+    border: 1px solid var(--mandae-text-light);
     background-color: var(--mandae-bg-element);
     color: var(--mandae-text);
     transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
@@ -132,11 +132,11 @@
 .form-control:focus {
     outline: none;
     border-color: var(--mandae-primary);
-    box-shadow: 0 0 0 3px rgba(162, 142, 249, 0.15);
+    box-shadow: 0 0 0 2px rgba(162, 142, 249, 0.25);
 }
 
 .form-control::placeholder {
-    color: var(--mandae-text-light);
+    color: #a0aabf;
 }
 
 /* Badges */

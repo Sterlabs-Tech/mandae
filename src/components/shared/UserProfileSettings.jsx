@@ -7,7 +7,7 @@ const UserProfileSettings = ({ onClose }) => {
     const { currentUser, login, theme, setTheme } = useAppStore();
 
     const [name, setName] = useState(currentUser?.name || '');
-    const [password, setPassword] = useState(currentUser?.password || '');
+    const [password, setPassword] = useState(''); // Don't prefill hashed password
     const [avatar, setAvatar] = useState(currentUser?.avatar || '');
     const [localTheme, setLocalTheme] = useState(theme);
 
@@ -23,16 +23,17 @@ const UserProfileSettings = ({ onClose }) => {
     };
 
     const handleSave = async () => {
-        if (!name.trim() || !password.trim()) {
-            alert('Nome e senha são obrigatórios.');
+        if (!name.trim()) {
+            alert('Nome é obrigatório.');
             return;
         }
 
-        const res = await updateDependent(currentUser.id, {
-            name,
-            password,
-            avatar
-        });
+        const updateData = { name, avatar };
+        if (password.trim() !== '') {
+            updateData.password = password;
+        }
+
+        const res = await updateDependent(currentUser.id, updateData);
 
         if (res.success) {
             login(res.user);
@@ -56,12 +57,11 @@ const UserProfileSettings = ({ onClose }) => {
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '2rem' }}>
                         <div style={{ width: '100px', height: '100px', borderRadius: '50%', overflow: 'hidden', border: '4px solid var(--mandae-border)', marginBottom: '1rem' }}>
                             {avatar ? (
-                                <img src={avatar} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                            ) : (
-                                <div style={{ width: '100%', height: '100%', background: 'var(--mandae-primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '2rem', fontWeight: 'bold' }}>
-                                    {name.charAt(0)}
-                                </div>
-                            )}
+                                <img src={avatar} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
+                            ) : null}
+                            <div style={{ display: avatar ? 'none' : 'flex', width: '100%', height: '100%', background: 'var(--mandae-primary-light)', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '2rem', fontWeight: 'bold' }}>
+                                {name?.charAt(0)?.toUpperCase()}
+                            </div>
                         </div>
                         <label className="btn btn-outline" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', padding: '0.4rem 1rem', fontSize: '0.9rem' }}>
                             <Upload size={16} /> Trocar Foto
@@ -75,8 +75,8 @@ const UserProfileSettings = ({ onClose }) => {
                     </div>
 
                     <div className="form-group">
-                        <label className="form-label">Senha de Acesso</label>
-                        <input type="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)} />
+                        <label className="form-label">Nova Senha de Acesso (Deixe em branco para manter a atual)</label>
+                        <input type="password" className="form-control" value={password} onChange={e => setPassword(e.target.value)} placeholder="******" />
                     </div>
 
                     <div className="form-group">
