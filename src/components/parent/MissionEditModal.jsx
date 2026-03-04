@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAppStore } from '../../store/AppContext';
-import { X, Save, PlusCircle, Trash2, Upload } from 'lucide-react';
+import { ChevronLeft, Save, PlusCircle, Trash2, Upload } from 'lucide-react';
 import { saveMission, fetchFamilyData } from '../../actions/db';
 
 const DEFAULT_COVER = 'https://images.unsplash.com/photo-1595514535415-84cf0efd3244?w=400&q=80';
@@ -126,11 +126,13 @@ const MissionEditModal = ({ mission, onClose }) => {
     };
 
     return (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
-            <div className="card animate-scale-in" style={{ width: '100%', maxWidth: '800px', maxHeight: '90vh', display: 'flex', flexDirection: 'column', padding: 0, overflow: 'hidden' }}>
-                <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid var(--mandae-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <h2 style={{ fontSize: '1.4rem' }}>Editar Missão</h2>
-                    <button className="btn-icon btn-ghost" onClick={onClose}><X size={20} /></button>
+        <div className="modal-overlay">
+            <div className="card modal-content animate-scale-in">
+                <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid var(--mandae-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--mandae-bg-element)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <button className="btn-icon btn-ghost" onClick={onClose} aria-label="Voltar"><ChevronLeft size={24} /></button>
+                        <h2 style={{ fontSize: '1.4rem', margin: 0 }}>Editar Missão</h2>
+                    </div>
                 </div>
 
                 <div style={{ flex: 1, overflowY: 'auto', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '2rem' }}>

@@ -117,12 +117,14 @@ const MissionWizard = ({ onClose }) => {
     };
 
     return (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}>
-            <div className="card animate-scale-in" style={{ width: '100%', maxWidth: '800px', maxHeight: '90vh', display: 'flex', flexDirection: 'column', padding: 0, overflow: 'hidden' }}>
+        <div className="modal-overlay">
+            <div className="card modal-content animate-scale-in">
 
-                <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid var(--mandae-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <h2 style={{ fontSize: '1.4rem' }}>Criar Nova Missão</h2>
-                    <button className="btn-icon btn-ghost" onClick={onClose}><X size={20} /></button>
+                <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid var(--mandae-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--mandae-bg-element)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <button className="btn-icon btn-ghost" onClick={onClose} aria-label="Voltar"><ChevronLeft size={24} /></button>
+                        <h2 style={{ fontSize: '1.4rem', margin: 0 }}>Criar Nova Missão</h2>
+                    </div>
                 </div>
 
                 <div style={{ padding: '1rem 2rem', background: 'var(--mandae-bg)', display: 'flex', gap: '8px' }}>
