@@ -55,11 +55,15 @@
   --mandae-accent: #59595C;
   --mandae-accent-light: #7a7a7e;
 
-  --mandae-bg: #FBEFE7;
-  --mandae-bg-element: #FFFFFF;
-  --mandae-text: #222222;
-  --mandae-text-light: #59595C;
-  --mandae-border: #e8d8ce;
+  /* True Dark Mode Colors */
+  --mandae-bg: #121212;
+  --mandae-bg-element: #1e1e1e;
+  --mandae-text: #ffffff;
+  --mandae-text-light: #a0aabf;
+  --mandae-border: #333333;
+
+  --glass-bg: rgba(30, 30, 30, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.1);
 
   --font-heading: 'Inter', sans-serif;
   --font-body: 'Inter', sans-serif;

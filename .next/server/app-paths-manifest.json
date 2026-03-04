@@ -1,7 +1,4 @@
 {
-  "/register/page": "app/register/page.js",
-  "/login/page": "app/login/page.js",
-  "/(parent)/parent/dependents/page": "app/(parent)/parent/dependents/page.js",
-  "/(parent)/parent/page": "app/(parent)/parent/page.js",
-  "/(parent)/parent/approvals/page": "app/(parent)/parent/approvals/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/login/page": "app/login/page.js"
 }

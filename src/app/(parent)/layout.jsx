@@ -11,10 +11,16 @@ export default function ParentLayout({ children }) {
     const router = useRouter();
     const pathname = usePathname();
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const handleLogout = () => {
         logout();
         router.push('/login');
+    };
+
+    // Close sidebar when navigating on mobile
+    const handleNavClick = () => {
+        setIsSidebarOpen(false);
     };
 
     // If no currentUser or not a parent, we should handle this via a higher level auth wrapper, 
@@ -25,15 +31,10 @@ export default function ParentLayout({ children }) {
 
     return (
         <div className="app-container" style={{ background: 'var(--mandae-bg)' }}>
+            <div className={`sidebar-overlay ${isSidebarOpen ? 'open' : ''}`} onClick={() => setIsSidebarOpen(false)}></div>
+
             {/* Sidebar */}
-            <aside style={{
-                width: 'var(--sidebar-width)',
-                background: 'var(--mandae-bg-element)',
-                borderRight: '1px solid var(--mandae-border)',
-                display: 'flex',
-                flexDirection: 'column',
-                boxShadow: '4px 0 24px rgba(0,0,0,0.02)'
-            }}>
+            <aside className={`sidebar-container ${isSidebarOpen ? 'open' : ''}`}>
                 {/* Logo / Brand */}
                 <div style={{ padding: '2rem 1.5rem', borderBottom: '1px solid var(--mandae-border)' }}>
                     <h2 className="text-gradient" style={{ fontSize: '1.8rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -49,6 +50,7 @@ export default function ParentLayout({ children }) {
                 <nav style={{ flex: 1, padding: '1.5rem 1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     <Link
                         href="/parent"
+                        onClick={handleNavClick}
                         style={{
                             display: 'flex', alignItems: 'center', gap: '12px', padding: '0.8rem 1rem', borderRadius: 'var(--radius-sm)',
                             background: pathname === '/parent' ? 'rgba(67, 97, 238, 0.1)' : 'transparent',
@@ -63,6 +65,7 @@ export default function ParentLayout({ children }) {
 
                     <Link
                         href="/parent/approvals"
+                        onClick={handleNavClick}
                         style={{
                             display: 'flex', alignItems: 'center', gap: '12px', padding: '0.8rem 1rem', borderRadius: 'var(--radius-sm)',
                             background: pathname === '/parent/approvals' ? 'rgba(67, 97, 238, 0.1)' : 'transparent',
@@ -83,6 +86,7 @@ export default function ParentLayout({ children }) {
 
                     <Link
                         href="/parent/dependents"
+                        onClick={handleNavClick}
                         style={{
                             display: 'flex', alignItems: 'center', gap: '12px', padding: '0.8rem 1rem', borderRadius: 'var(--radius-sm)',
                             background: pathname === '/parent/dependents' ? 'rgba(67, 97, 238, 0.1)' : 'transparent',
@@ -120,11 +124,14 @@ export default function ParentLayout({ children }) {
                     backdropFilter: 'blur(12px)',
                     borderBottom: '1px solid var(--mandae-border)',
                     position: 'sticky', top: 0, zIndex: 10,
-                    display: 'flex', alignItems: 'center', padding: '0 2rem'
+                    display: 'flex', alignItems: 'center', padding: '0 1rem'
                 }}>
-                    <h1 style={{ fontSize: '1.25rem' }}>Painel do Responsável</h1>
+                    <button className="btn-icon mobile-header-toggle" onClick={() => setIsSidebarOpen(true)}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                    </button>
+                    <h1 style={{ fontSize: '1.25rem', marginLeft: '0.5rem' }}>Painel do Responsável</h1>
                 </header>
-                <div style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+                <div style={{ padding: '1.5rem', maxWidth: '1200px', margin: '0 auto' }}>
                     {children}
                 </div>
             </main>
