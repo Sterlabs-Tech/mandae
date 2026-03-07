@@ -1,9 +1,9 @@
-name: Deploy Mandae Staging
+name: Deploy Mandae PRD
 
 on:
   push:
     branches:
-      - main
+      - production  # Agora só dispara quando você enviar para esta branch
 
 jobs:
   deploy:
@@ -25,12 +25,12 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Build and Deploy to Cloud Run
+      - name: Build and Deploy to Cloud Run (PRD)
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v2
         with:
-          service: mandae-staging
+          service: mandae-prd
           region: us-central1
           source: .
           env_vars: |
-            DATABASE_URL=${{ secrets.DATABASE_URL_STAGING }}
+            DATABASE_URL=${{ secrets.DATABASE_URL_PRD }}
