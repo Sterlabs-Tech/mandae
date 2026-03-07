@@ -31,15 +31,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(parent)/parent/page.js"
     ],
-    "/(parent)/parent/approvals/page": [
+    "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(parent)/parent/approvals/page.js"
-    ],
-    "/(parent)/parent/dependents/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(parent)/parent/dependents/page.js"
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }

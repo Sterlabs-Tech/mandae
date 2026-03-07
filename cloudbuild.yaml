@@ -20,7 +20,7 @@ steps:
       - 'us-central1'
       - '--allow-unauthenticated'
       - '--set-env-vars'
-      - 'DATABASE_URL=postgresql://postgres:nXsP2bT%5BMG%2FO.D%2B9@35.232.239.171:5432/mandae_staging'
+      - 'DATABASE_URL=postgresql://postgres.ixophuhekwzgtewqryno:NukBOjaexjSnL8xI@aws-0-us-west-2.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1,DIRECT_URL=postgresql://postgres.ixophuhekwzgtewqryno:NukBOjaexjSnL8xI@aws-0-us-west-2.pooler.supabase.com:5432/postgres'
 
 images:
   - 'gcr.io/$PROJECT_ID/mandae-staging'
