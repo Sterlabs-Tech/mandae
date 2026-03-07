@@ -34,4 +34,3 @@ jobs:
           source: .
           env_vars: |
             DATABASE_URL=${{ secrets.DATABASE_URL_STAGING }}
-            PORT=8080
